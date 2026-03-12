@@ -76,6 +76,11 @@ export default {
       this.success = "";
       this.error = "";
 
+      if (!this.user.username || !this.user.email || !this.user.nama) {
+        this.error = "Semua field wajib diisi";
+        return;
+      }
+
       const id = this.$route.params.id;
 
       try {
