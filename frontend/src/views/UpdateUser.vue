@@ -83,6 +83,8 @@ export default {
 
       const id = this.$route.params.id;
 
+      const token = localStorage.getItem("token");
+
       try {
         const res = await api.put(`/users/${id}`, {
           headers: {

@@ -98,6 +98,8 @@ export default {
 
       if (!confirmDelete) return;
 
+      const token = localStorage.getItem("token");
+
       try {
         const res = await api.delete(`/users/${id}`, {
           headers: {
@@ -108,7 +110,11 @@ export default {
         this.success = res.data.message;
         this.fetchUsers();
       } catch (err) {
-        this.error = err.response.data.message;
+        if (err.response && err.response.data) {
+          this.error = err.response.data.message;
+        } else {
+          this.error = "Terjadi kesalahan pada server";
+        }
       }
     },
 
