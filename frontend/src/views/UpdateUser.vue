@@ -85,6 +85,9 @@ export default {
 
       try {
         const res = await api.put(`/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           username: this.user.username,
           email: this.user.email,
           nama: this.user.nama,

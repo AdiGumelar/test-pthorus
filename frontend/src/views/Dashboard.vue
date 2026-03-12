@@ -99,7 +99,11 @@ export default {
       if (!confirmDelete) return;
 
       try {
-        const res = await api.delete(`/users/${id}`);
+        const res = await api.delete(`/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         this.success = res.data.message;
         this.fetchUsers();

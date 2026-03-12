@@ -76,6 +76,7 @@ def get_user(id):
     return jsonify(user), 200
 
 @user_bp.route("/users/<int:user_id>", methods=["PUT"])
+@jwt_required()
 def update(user_id):
 
     data = request.get_json()
@@ -93,6 +94,7 @@ def update(user_id):
     return jsonify({"message": "Data user berhasil diperbarui"}), 200
 
 @user_bp.route("/users/<int:user_id>", methods=["DELETE"])
+@jwt_required()
 def delete(user_id):
 
     success = delete_user(user_id)
