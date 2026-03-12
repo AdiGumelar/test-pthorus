@@ -7,6 +7,9 @@ from ..services import (
     delete_user,
     get_user_by_id
 )
+from ..utils import (validate_login,
+                     validate_update_user,
+                     validate_create_user)
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required
 
@@ -16,6 +19,11 @@ user_bp = Blueprint("users", __name__)
 def register():
 
     data = request.get_json()
+
+    valid,error = validate_create_user(data)
+
+    if not valid:
+        return jsonify({"message" : error}), 422
 
     user, error = register_user(data)
 
@@ -31,6 +39,11 @@ def register():
 def login():
 
     data = request.get_json()
+
+    valid,error = validate_login(data)
+
+    if not valid:
+        return jsonify({"message" : error}), 422
 
     user = login_user(data)
 
@@ -67,10 +80,15 @@ def update(user_id):
 
     data = request.get_json()
 
-    success = update_user(user_id, data)
+    valid,error = validate_update_user(data)
+
+    if not valid:
+        return jsonify({"message" : error}), 422
+
+    success, message = update_user(user_id, data)
 
     if not success:
-        return jsonify({"message": "User tidak ditemukan"}), 404
+        return jsonify({"message": message}), 404
 
     return jsonify({"message": "Data user berhasil diperbarui"}), 200
 

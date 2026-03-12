@@ -7,22 +7,22 @@
         <form @submit.prevent="handleRegister">
           <div class="mb-3">
             <label class="form-label">Nama</label>
-            <input type="text" class="form-control" v-model="nama" required />
+            <input type="text" class="form-control" v-model="nama" />
           </div>
 
           <div class="mb-3">
             <label class="form-label">Username</label>
-            <input type="text" class="form-control" v-model="username" required />
+            <input type="text" class="form-control" v-model="username" />
           </div>
 
           <div class="mb-3">
             <label class="form-label">Email</label>
-            <input type="email" class="form-control" v-model="email" required />
+            <input type="email" class="form-control" v-model="email" />
           </div>
 
           <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="password" class="form-control" v-model="password" required />
+            <input type="password" class="form-control" v-model="password" />
           </div>
 
           <button class="btn btn-primary w-100" type="submit">Register</button>
@@ -66,11 +66,6 @@ export default {
     async handleRegister() {
       this.error = "";
       this.success = "";
-
-      if (!this.nama || !this.username || !this.email || !this.password) {
-        this.error = "Semua field harus diisi";
-        return;
-      }
 
       try {
         const res = await api.post("/users/register", {

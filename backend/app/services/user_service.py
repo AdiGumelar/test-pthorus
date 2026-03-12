@@ -70,7 +70,19 @@ def update_user(user_id, data):
     user = User.query.get(user_id)
 
     if not user:
-        return False
+        return False, "User tidak ditemukan"
+
+    if "username" in data:
+        existing_user = User.query.filter_by(username=data["username"]).first()
+
+        if existing_user and existing_user.id != user_id:
+            return False, "Username sudah digunakan"
+    
+    if "email" in data:
+        existing_user = User.query.filter_by(username=data["email"]).first()
+
+        if existing_user and existing_user.id != user_id:
+            return False, "Email sudah digunakan"
 
     user.username = data.get("username", user.username)
     user.email = data.get("email", user.email)
@@ -78,7 +90,7 @@ def update_user(user_id, data):
 
     db.session.commit()
 
-    return True
+    return True, "User berhasil diupdate"
 
 
 def delete_user(user_id):
