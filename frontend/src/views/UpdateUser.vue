@@ -86,14 +86,19 @@ export default {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await api.put(`/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const res = await api.put(
+          `/users/${id}`,
+          {
+            username: this.user.username,
+            email: this.user.email,
+            nama: this.user.nama,
           },
-          username: this.user.username,
-          email: this.user.email,
-          nama: this.user.nama,
-        });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
 
         this.success = res.data.message;
 
